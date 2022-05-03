@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Database</title>
+    <link rel="stylesheet" href="commonStyles.css" />
+  </head>
+
+  <body>
+    <div id="links">
+      <div><a href="index.html">Home</a></div>
+      <div><a href="applied.html">Applied Jobs</a></div>
+      <div><a href="bookmark.html">Bookmarks</a></div>
+    </div>
+
+    <select id="sortSalary" onChange="handleSalarySort()">
+    <option value="">Sort By Salary</option>
+    <option value="HTL">HTL</option>
+    <option value="LTH">LTH</option>
+    </select>
+
+    <!-- <select id="filterRole" onchange="handleFilter()">
+    <option >Filter Category</option>
+    <option value=""></option>
+    </select> -->
+
+
+    <main>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Job applied</th>
+            <th>Salary expected</th>
+            <th>Add to bookmark</th>
+          </tr>
+        </thead>
+        <tbody id="body">
+          <!-- Append your output to tbody -->
+        </tbody>
+      </table>
+    </main>
+  </body>
+  <script>
+    //you need to code here
+    //get item from local storage(submitted by index.html page--> home page)
+
+    var jobArr=JSON.parse(localStorage.getItem("jobList"))
+    displayData(jobArr)
+
+    
+    var bookMarkArr=JSON.parse(localStorage.getItem("bookmarks"))||[];
+
+
+    var sum=bookMarkArr.reduce(function(acc,elem){
+      return acc+Number(elem.salary);
+    },0);
+
+    function displayData(data)
+    {
+       document.querySelector("#body").innerHTML=null;
+       
+      data.forEach(function(elem){
+
+        var tr=document.createElement("tr")
+
+        var td1=document.createElement("td")
+        td1.innerText=elem.name
+
+        var td2=document.createElement("td")
+        td2.innerText=elem.email
+        var td3=document.createElement("td")
+        td3.innerText=elem.role
+        var td4=document.createElement("td")
+        td4.innerText=elem.salary
+        var td5=document.createElement("td")
+        td5.innerText="Bookmark";
+        td5.style.color="blue";
+        td5.style.cursor="pointer";
+        td5.addEventListener("click",function(){
+          bookMarkFunction(elem);
+          alert("you have Bookmark data")
+        });
+        tr.append(td1,td2,td3,td4,td5)
+        document.querySelector("tbody").append(tr);
+
+      });
+    }
+    function bookMarkFunction(elem)
+    {
+      bookMarkArr.push(elem)
+      localStorage.setItem("bookmarks",JSON.stringify(bookMarkArr))
+    }
+function handleSalarySort()
+{
+  var select =document.querySelector("#sortSalary").value;
+  if(select=="HTL")
+  {
+    jobArr.sort(function(a,b){
+      return b.salary-a.salary;
+    });
+  }
+  else if(select=="LTH")
+  {
+    jobArr.sort(function(a,b){
+      return a.salary-b.salary;
+    })
+  }
+  displayData(jobArr)
+}
+
+
+  </script>
+</html>
