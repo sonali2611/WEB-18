@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in</title>
+</head>
+<style>
+
+#nav{
+    display:flex;
+    justify-content: space-around;
+    background-color:  orange;
+    padding: 10px;
+    font-size: 30px;
+}
+a{
+    text-decoration: none;
+}
+#nav a:hover{
+    color:white;
+}
+#nav a{
+    cursor:pointer;
+}
+body{
+    /* background-image: url("img_nature.jpg");
+    min-height: 380px; */
+
+/* Center and scale the image nicely */
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+position: relative;
+}
+.container {
+  position: center;
+  right: 0;
+  margin:auto;
+  max-width: 700px;
+  height:400px;
+  padding: 16px;
+  margin-top: 30px;
+  background-color: rgb(79, 195, 241);
+  text-align: center;
+}
+ #btn{
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 50%;
+  opacity: 0.9;
+  margin: auto;
+}
+form{
+    text-align: center;
+}
+
+</style>
+
+
+<body>
+    <h1>Masai E-comm</h1>
+    <div id="nav">
+        <div><a href="index.html">Home Page</a></div>
+        <div><a href="signup.html">Sign Up</a></div>
+        <div><a href="login.html">Log In</a></div>
+        <div><a href="mens.html" >Mens Page</a></div>
+        <div><a href="womens.html">Womens Page</a></div>
+        <div><a href="cart.html" >Cart</a></div>
+    </div>
+   
+<div class="bg-img">
+  <form action="/action_page.php" class="container">
+    <h1>Login</h1>
+
+    <label  for="email"><b>Email</b></label>
+    <input id="email" type="text" placeholder="Enter Email" name="email" required><br>
+    <br>
+    <label for="psw"><b>Password</b></label>
+    <input  id="pass" type="password" placeholder="Enter Password" name="psw" required>
+    <br><br>
+    <input id="btn" type="submit" value="LOGIN">
+  </form>
+</div>
+</body>
+</html>
+<script>
+
+document.querySelector("form").addEventListener("submit", loginFun);
+   
+    var regdUsers=JSON.parse(localStorage.getItem("log"))
+
+function loginFun()
+{
+event.preventDefault()
+var enteredEmail=document.querySelector("#email").value
+var enteredPass=document.querySelector("#pass").value
+var n=regdUsers.length
+for(var i=0;i<n;i++)
+{
+
+if(regdUsers==null)
+    {
+        alert("Please create an account")
+    }
+    else if(regdUsers.email==enteredEmail.email && regdUsers.password==enteredPass.password)
+    {
+        alert("Login in sucessful")
+        window.location.href="mens.html"
+        break;
+    }
+   
+else{
+    alert("user does not exist")
+}
+// localStorage.setItem("userData",JSON.stringify(data))
+//     window.location.href="index.html"
+// }
+
+}
+}
+
+</script>
+
+
+
