@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         #nav{
+            display:flex;
+            justify-content:space-around;
+            background-color: teal;
+            color:white;
+           /* height:50px; */
+           font-size: 50px;
+           padding:10px;
+        }
+        #container{
+            display:grid;
+            grid-template-columns: repeat(4,1fr);
+            gap:20px;
+        }
+        p{
+            /* background-color: pink; */
+            /* color:blue; */
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="nav">
+        <div><a href="mens.html">Mens</a></div>
+        <div><a href="womens.html">Womens</a></div>
+        <div><a href="cart.html">Cart</a></div>
+    </div>
+    <p></p>
+    <div id="container">
+
+    </div>
+    
+</body>
+</html>
+<script>
+
+var arr = JSON.parse(localStorage.getItem("Item"))||[]
+
+var total=arr.reduce(function(sum,elem,index,arr){
+    return sum+Number(elem.price)
+},0)
+// console.log(total)
+var length=arr.length
+document.querySelector("p").innerText="You have " + length+ " and $ "+ total+ " item to cart"
+
+
+arr.map(function(elem,index)
+{
+    var box=document.createElement("div")
+    var image=document.createElement("img")
+    image.src=elem.image_url;
+    var name=document.createElement("p")
+    name.innerText=elem.name;
+    var price=document.createElement("h5")
+    price.innerText=elem.price
+    var sprice=document.createElement("h5")
+    sprice.innerText=elem.strikedoffprice
+    sprice.style.textDecoration="line-through"
+    var btn=document.createElement("button")
+    btn.innerText="Remove";
+
+    btn.addEventListener("click",function(){
+        remove(elem,index)
+    });
+   
+
+    box.append(image,name,price,sprice,btn)
+    // console.log(box)
+document.querySelector("#container").append(box);
+
+})
+function remove(elem,index)
+{
+    arr.splice(index,1)
+    localStorage.setItem("Item",JSON.stringify(arr))
+    window.location.reload();
+}
+
+
+</script>
